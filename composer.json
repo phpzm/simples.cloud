@@ -1,0 +1,21 @@
+{
+    "name": "phpzm/trabalho-final",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "William",
+            "email": "wilcorrea@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Fagoc\\": "app/domains/",
+            "Fagoc\\Core\\": "core"
+        },
+        "files": [
+            "bootstrap/index.php"
+        ]
+    }
+}
