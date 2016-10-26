@@ -49,10 +49,10 @@ class Router
      */
     public function on($method, $uri, $callback)
     {
-        if ($method === '*') {
-            $method = ['get', 'post', 'put', 'patch', 'delete'];
-        }
         $methods = explode(',', $method);
+        if ($method === '*') {
+            $methods = ['get', 'post', 'put', 'patch', 'delete'];
+        }
 
         foreach ($methods as $method) {
 
