@@ -1,12 +1,17 @@
 <?php
 
 use Fagoc\Core\App;
-use Fagoc\Core\Routing\Router;
+use Fagoc\Core\Flow\Router;
+use Fagoc\Core\Gateway\Response;
 
-return function (Router $router) {
+return function (Router $router, Response $response) {
 
-    $router->on('get', '/', function () {
-        return 'Hello World!' . PHP_EOL;
+    $router->on('get', '/', function () use ($response) {
+        return $response->view('index.phtml', ['title' => 'Hello World!']);
+    });
+
+    $router->on('get', '/exercicio/:exercicio', function ($exercicio) use ($response) {
+        return $response->view('index.phtml', ['title' => 'Exercício ' . $exercicio]);
     });
 
     $namespace = App::config('route')->namespace;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Fagoc\Core\Routing;
+namespace Fagoc\Core\Gateway;
 
 /**
  * Class Request
- * @package Fagoc\Core\Routing
+ * @package Fagoc\Core\Gateway
  */
 class Request
 {
@@ -124,10 +124,13 @@ class Request
     {
         $this->data[$source] = $data;
 
-        foreach ($data as $key => $value) {
-            $this->input[$key] = [
-                'value' => $value, 'source' => $source
-            ];
+        if (is_array($data) or is_object($data)) {
+
+            foreach ($data as $key => $value) {
+                $this->input[$key] = [
+                    'value' => $value, 'source' => $source
+                ];
+            }
         }
     }
 

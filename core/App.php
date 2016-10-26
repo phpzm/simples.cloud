@@ -2,8 +2,9 @@
 
 namespace Fagoc\Core;
 
-use Fagoc\Core\Routing\Request;
-use Fagoc\Core\Routing\Router;
+use Fagoc\Core\Gateway\Request;
+use Fagoc\Core\Gateway\Response;
+use Fagoc\Core\Flow\Router;
 
 /**
  * Class App
@@ -17,11 +18,18 @@ class App
     private static $REQUEST = null;
 
     /**
+     * @var null
+     */
+    private static $RESPONSE = null;
+
+    /**
      * @return mixed
      */
     public static function run()
     {
         $router = new Router(self::request());
+
+        self::$RESPONSE = new Response();
 
         self::routes($router);
 
@@ -56,17 +64,18 @@ class App
 
     /**
      * @param Router $router
+     * @param array $files
      * @return Router
      */
-    private static function routes(Router $router)
+    public static function routes(Router $router, array $files = null)
     {
-        $route = self::config('route');
+        $files = $files ? $files : self::config('route')->files;
 
-        foreach ($route->files as $file) {
+        foreach ($files as $file) {
             /** @noinspection PhpIncludeInspection */
             $callable = require_once __APP_ROOT__ . '/' . $file;
             if (is_callable($callable)) {
-                $callable($router);
+                $callable($router, self::$RESPONSE);
             }
         }
 
@@ -84,5 +93,20 @@ class App
         if (method_exists(self::request(), $get)) {
             return self::request()->$get();
         }
+        return null;
+    }
+
+    /**
+     * @param $uri
+     * @param bool $print
+     * @return string
+     */
+    public static function route($uri, $print = true)
+    {
+        $route = '//' . self::request()->getUrl() . '/' . ($uri{0} === '/' ? substr($uri, 1) : $uri);
+        if ($print) {
+            out($route);
+        }
+        return $route;
     }
 }

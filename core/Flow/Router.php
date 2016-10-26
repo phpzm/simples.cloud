@@ -1,10 +1,12 @@
 <?php
 
-namespace Fagoc\Core\Routing;
+namespace Fagoc\Core\Flow;
+
+use Fagoc\Core\Gateway\Request;
 
 /**
  * Class Router
- * @package Fagoc\Core\Routing
+ * @package Fagoc\Core\Flow
  */
 class Router
 {
