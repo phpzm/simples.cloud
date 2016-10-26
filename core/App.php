@@ -13,12 +13,12 @@ use Fagoc\Core\Flow\Router;
 class App
 {
     /**
-     * @var null
+     * @var Request
      */
     private static $REQUEST = null;
 
     /**
-     * @var null
+     * @var Response
      */
     private static $RESPONSE = null;
 
