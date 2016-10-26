@@ -11,11 +11,18 @@
         <span></span>
       </span>
         <div class="nav-right nav-menu">
-            <a class="nav-item is-tab is-active">Home</a>
-            <a class="nav-item is-tab" href="<?php $this->route('/exercicio/6'); ?>">Exercício 6</a>
-            <a class="nav-item is-tab" href="<?php $this->route('/exercicio/7'); ?>">Exercício 7</a>
-            <a class="nav-item is-tab" href="<?php $this->route('/exercicio/8'); ?>">Exercício 8</a>
-
+            <?php
+            if (is_array($this->get('menu', false))) {
+                foreach ($this->get('menu', false) as $href => $text) {
+                    $selected = $this->request()->getUri() === $href ? 'is-active' : '';
+                    ?>
+                        <a class="nav-item is-tab <?php out($selected); ?>" href="<?php $this->route($href); ?>">
+                            <?php out($text); ?>
+                        </a>
+                    <?php
+                }
+            }
+            ?>
             <span class="nav-item">
                 <a class="button">
                     Log in

@@ -154,4 +154,11 @@ class Engine
         return $this->route('assets/' . $path, $print);
     }
 
+    /**
+     * @return \Fagoc\Core\Gateway\Request
+     */
+    protected function request()
+    {
+        return App::request();
+    }
 }
