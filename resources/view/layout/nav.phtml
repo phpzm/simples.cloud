@@ -1,21 +1,29 @@
-<?php
-
-use Fagoc\Core\App;
-
-?>
-<nav class="nav has-shadow">
+<nav class="nav has-shadow" id="top">
     <div class="container">
-
         <div class="nav-left">
-            <a class="nav-item is-brand" href="<?php App::route('/'); ?>">
+            <a class="nav-item is-brand" href="<?php $this->route('/'); ?>">
                 <img src="http://fagoc.br/download/a/logo" alt="logo"/>
             </a>
         </div>
-
+      <span class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
         <div class="nav-right nav-menu">
-            <a class="nav-item" href="<?php App::route('/exercicio/6'); ?>">Exercio 6</a>
-            <a class="nav-item" href="<?php App::route('/exercicio/7'); ?>">Exercio 7</a>
-            <a class="nav-item" href="<?php App::route('/exercicio/8'); ?>">Exercio 8</a>
+            <a class="nav-item is-tab is-active">Home</a>
+            <a class="nav-item is-tab" href="<?php $this->route('/exercicio/6'); ?>">Exercício 6</a>
+            <a class="nav-item is-tab" href="<?php $this->route('/exercicio/7'); ?>">Exercício 7</a>
+            <a class="nav-item is-tab" href="<?php $this->route('/exercicio/8'); ?>">Exercício 8</a>
+
+            <span class="nav-item">
+                <a class="button">
+                    Log in
+                </a>
+                <a class="button is-info">
+                    Sign up
+                </a>
+            </span>
         </div>
     </div>
 </nav>

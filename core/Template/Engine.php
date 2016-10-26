@@ -3,6 +3,7 @@
 namespace Fagoc\Core\Template;
 
 use \Exception;
+use Fagoc\Core\App;
 
 /**
  * Class Engine
@@ -132,4 +133,25 @@ class Engine
         /** @noinspection PhpIncludeInspection */
         return include $filename;
     }
+
+    /**
+     * @param $path
+     * @param bool $print
+     * @return string
+     */
+    protected function route($path, $print = true)
+    {
+        return App::route($path, $print);
+    }
+
+    /**
+     * @param $path
+     * @param bool $print
+     * @return string
+     */
+    protected function asset($path, $print = true)
+    {
+        return $this->route('assets/' . $path, $print);
+    }
+
 }

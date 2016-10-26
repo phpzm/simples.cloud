@@ -34,6 +34,15 @@ class Router
     }
 
     /**
+     * @param $name
+     * @param $arguments
+     */
+    public function __call($name, $arguments)
+    {
+        $this->on($name, $arguments[0], $arguments[1]);
+    }
+
+    /**
      * @param $method
      * @param $uri
      * @param $callback

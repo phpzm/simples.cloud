@@ -10,8 +10,8 @@ return function (Router $router, Response $response) {
         return $response->view('index.phtml', ['title' => 'Hello World!']);
     });
 
-    $router->on('get', '/exercicio/:exercicio', function ($exercicio) use ($response) {
-        return $response->view('index.phtml', ['title' => 'Exercício ' . $exercicio]);
+    $router->get('/exercicio/:exercicio', function ($exercicio) use ($response) {
+        return $response->view('exercicio.phtml', ['title' => 'Exercício ' . $exercicio]);
     });
 
     $namespace = App::config('route')->namespace;
