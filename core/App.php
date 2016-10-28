@@ -1,10 +1,10 @@
 <?php
 
-namespace Fagoc\Core;
+namespace Simples\Core;
 
-use Fagoc\Core\Gateway\Request;
-use Fagoc\Core\Gateway\Response;
-use Fagoc\Core\Flow\Router;
+use Simples\Core\Gateway\Request;
+use Simples\Core\Gateway\Response;
+use Simples\Core\Flow\Router;
 
 /**
  * Class App
@@ -25,15 +25,36 @@ class App
     /**
      * @return mixed
      */
-    public static function run()
+    public static function output()
     {
-        $router = new Router(self::request());
+        ob_start();
 
-        self::$RESPONSE = new Response();
+        $router = new Router(self::request(), self::response());
 
-        self::routes($router);
+        $run = self::routes($router)->run();
 
-        return $router->run();
+        ob_end_clean();
+
+        return $run;
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if (method_exists(self::request(), $name)) {
+
+            return self::request()->$name();
+
+        } else if (method_exists(self::response(), $name)) {
+
+            return self::response()->$name();
+        }
+
+        return null;
     }
 
     /**
@@ -48,13 +69,24 @@ class App
     }
 
     /**
+     * @return Response
+     */
+    public static function response()
+    {
+        if (!self::$RESPONSE) {
+            self::$RESPONSE = new Response();
+        }
+        return self::$RESPONSE;
+    }
+
+    /**
      * @param $name
      * @return object
      */
     public static function config($name)
     {
         $config = [];
-        $filename = path(true, 'app', 'config', $name . '.php');
+        $filename = path(true, 'app', 'configs', $name . '.php');
         if (file_exists($filename)) {
             /** @noinspection PhpIncludeInspection */
             $config = require $filename;
@@ -75,25 +107,11 @@ class App
             /** @noinspection PhpIncludeInspection */
             $callable = require_once __APP_ROOT__ . '/' . $file;
             if (is_callable($callable)) {
-                $callable($router, self::$RESPONSE);
+                $callable($router);
             }
         }
 
         return $router;
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        $get = 'get' . ucfirst($name);
-        if (method_exists(self::request(), $get)) {
-            return self::request()->$get();
-        }
-        return null;
     }
 
     /**
@@ -109,4 +127,31 @@ class App
         }
         return $route;
     }
+
+    /**
+     * @param $output
+     */
+    public static function headers($output)
+    {
+        if (method_exists($output, 'getHeaders')) {
+
+            $headers = $output->getHeaders();
+
+            foreach ($headers as $header) {
+                header($header->string, $header->replace, $header->code);
+            }
+        }
+    }
+
+    /**
+     * @param $output
+     */
+    public static function body($output)
+    {
+        if (method_exists($output, 'getBody')) {
+            $output = $output->getBody();
+        }
+        out($output);
+    }
+
 }

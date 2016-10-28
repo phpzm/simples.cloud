@@ -1,8 +1,13 @@
+<?php
+
+/** @var Simples\Core\Template\Engine $this */
+
+?>
 <nav class="nav has-shadow" id="top">
     <div class="container">
         <div class="nav-left">
-            <a class="nav-item is-brand" href="<?php $this->route('/'); ?>">
-                <img src="http://fagoc.br/download/a/logo" alt="logo"/>
+            <a class="nav-item is-brand" href="<?php $this->href('/home'); ?>">
+                <img src="<?php $this->image('logo.png') ?>" alt="logo"/>
             </a>
         </div>
       <span class="nav-toggle">
@@ -14,9 +19,9 @@
             <?php
             if (is_array($this->get('menu', false))) {
                 foreach ($this->get('menu', false) as $href => $text) {
-                    $selected = $this->request()->getUri() === $href ? 'is-active' : '';
+                    $selected = $this->isActive($href) ? 'is-active' : '';
                     ?>
-                        <a class="nav-item is-tab <?php out($selected); ?>" href="<?php $this->route($href); ?>">
+                        <a class="nav-item is-tab <?php out($selected); ?>" href="<?php $this->href($href); ?>">
                             <?php out($text); ?>
                         </a>
                     <?php

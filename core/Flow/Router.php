@@ -1,12 +1,14 @@
 <?php
 
-namespace Fagoc\Core\Flow;
+namespace Simples\Core\Flow;
 
-use Fagoc\Core\Gateway\Request;
+use Simples\Controller;
+use Simples\Core\Gateway\Request;
+use Simples\Core\Gateway\Response;
 
 /**
  * Class Router
- * @package Fagoc\Core\Flow
+ * @package Simples\Core\Flow
  */
 class Router
 {
@@ -16,9 +18,15 @@ class Router
     private $request;
 
     /**
+     * @var Response
+     */
+    private $response;
+
+    /**
      * @var array
      */
     private $routes = [];
+
     /**
      * @var object
      */
@@ -27,10 +35,12 @@ class Router
     /**
      * Router constructor.
      * @param Request $request
+     * @param Response $response
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -62,6 +72,7 @@ class Router
             }
             $peaces = explode('/', $uri);
             foreach ($peaces as $key => $value) {
+                $peaces[$key] = str_replace('*', '(.*)', $peaces[$key]);
                 if (strpos($value, ':') === 0) {
                     $peaces[$key] = '(\w+)';
                 }
@@ -87,14 +98,15 @@ class Router
 
             ['method' => 'GET', 'uri' => '', 'callable' => 'index'],
             ['method' => 'GET', 'uri' => 'create', 'callable' => 'create'],
-            ['method' => 'POST', 'uri' => '', 'callable' => 'store'],
             ['method' => 'GET', 'uri' => ':id', 'callable' => 'show'],
             ['method' => 'GET', 'uri' => ':id/edit', 'callable' => 'edit'],
+
+            ['method' => 'POST', 'uri' => '', 'callable' => 'store'],
             ['method' => 'PUT,PATCH', 'uri' => ':id', 'callable' => 'update'],
             ['method' => 'DELETE', 'uri' => ':id', 'callable' => 'destroy'],
         ];
         foreach ($resource as $item) {
-            $item = (object) $item;
+            $item = (object)$item;
             $this->on($item->method, $uri . '/' . $item->uri, $class . '@' . $item->callable);
         }
     }
@@ -122,7 +134,7 @@ class Router
             if (preg_match($route, $this->request->getUri(), $params)) {
 
                 array_shift($params);
-                $this->route = (object)['method' => $method, 'route' => $route, 'callback' => $callback];
+                $this->route = (object)['method' => $method, 'uri' => $this->request->getUri(), 'route' => $route, 'callback' => $callback];
 
                 return $this->resolve($callback, array_values($params));
             }
@@ -143,8 +155,41 @@ class Router
             if (!isset($peaces[1])) {
                 return null;
             }
-            $callback = [$peaces[0], $peaces[1]];
+            $class = $peaces[0];
+            $method = $peaces[1];
+
+            if (method_exists($class, $method)) {
+
+                /** @var Controller $controller */
+                $controller = new $class($this->request(), $this->response(), $this->route);
+
+                $callback = [$controller, $method];
+            }
         }
         return call_user_func_array($callback, $params);
+    }
+
+    /**
+     * @return Request
+     */
+    public function request()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return Response
+     */
+    public function response()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return object
+     */
+    public function route()
+    {
+        return $this->route;
     }
 }

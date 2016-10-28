@@ -1,15 +1,12 @@
 <?php
 
-namespace Fagoc\Core\Template;
-
-use \Exception;
-use Fagoc\Core\App;
+namespace Simples\Core\Template;
 
 /**
  * Class Engine
- * @package Fagoc\Core\Template
+ * @package Simples\Core\Template
  */
-class Engine
+class Engine extends Tools
 {
     /**
      * @var string
@@ -64,9 +61,20 @@ class Engine
                 call_user_func_array($callable, is_array($data) ? array_values($data) : [$data]);
             }
         }
-        $content = ob_get_contents();
+        $content = $this->applyLayout(ob_get_contents());
 
-        if ($this->layout->done === false) {
+        ob_end_clean();
+
+        return $content;
+    }
+
+    /**
+     * @param $content
+     * @return string
+     */
+    private function applyLayout($content)
+    {
+        if (($this->layout->template) and ($this->layout->done === false)) {
 
             $this->layout->done = true;
 
@@ -76,8 +84,6 @@ class Engine
 
             $this->sections[$this->layout->section] = null;
         }
-
-        ob_end_clean();
 
         return $content;
     }
@@ -134,31 +140,4 @@ class Engine
         return include $filename;
     }
 
-    /**
-     * @param $path
-     * @param bool $print
-     * @return string
-     */
-    protected function route($path, $print = true)
-    {
-        return App::route($path, $print);
-    }
-
-    /**
-     * @param $path
-     * @param bool $print
-     * @return string
-     */
-    protected function asset($path, $print = true)
-    {
-        return $this->route('assets/' . $path, $print);
-    }
-
-    /**
-     * @return \Fagoc\Core\Gateway\Request
-     */
-    protected function request()
-    {
-        return App::request();
-    }
 }

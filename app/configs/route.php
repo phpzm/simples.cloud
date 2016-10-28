@@ -3,6 +3,6 @@
 return [
     'namespace' => '\\Fagoc',
     'files' => [
-        'app/routes/default.php'
+        'app/routes/index.php'
     ]
 ];

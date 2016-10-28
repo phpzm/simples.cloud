@@ -4,8 +4,10 @@ define('__APP_ROOT__', dirname(__DIR__));
 
 require_once __APP_ROOT__ . '/vendor/autoload.php';
 
-use Fagoc\Core\App;
+use Simples\Core\App;
 
-$output = App::run();
+$output = App::output();
 
-echo $output;
+App::headers($output);
+
+App::body($output);

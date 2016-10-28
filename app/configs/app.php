@@ -2,5 +2,5 @@
 
 return [
     'assets' => 'public/assets',
-    'views' => 'resources/view'
+    'views' => 'app/resources/view'
 ];

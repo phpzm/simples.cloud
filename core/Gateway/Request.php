@@ -1,10 +1,10 @@
 <?php
 
-namespace Fagoc\Core\Gateway;
+namespace Simples\Core\Gateway;
 
 /**
  * Class Request
- * @package Fagoc\Core\Gateway
+ * @package Simples\Core\Gateway
  */
 class Request
 {
@@ -124,9 +124,13 @@ class Request
     {
         $this->data[$source] = $data;
 
-        if (is_array($data) or is_object($data)) {
+        if (isset($this->data[$source]['_method'])) {
+            unset($this->data[$source]['_method']);
+        }
 
-            foreach ($data as $key => $value) {
+        if (is_array($this->data[$source]) or is_object($this->data[$source])) {
+
+            foreach ($this->data[$source] as $key => $value) {
                 $this->input[$key] = [
                     'value' => $value, 'source' => $source
                 ];
@@ -156,6 +160,14 @@ class Request
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * @return array
+     */
+    public function all()
+    {
+        return $this->input;
     }
 
 }

@@ -2,6 +2,8 @@
 
 return function ($string) {
 
+    /** @var Simples\Core\Template\Engine $this */
+
     $this->layout('layout/template.phtml', 'content');
 
     ?>
@@ -11,7 +13,8 @@ return function ($string) {
             <div class="heading">
                 <h1 class="title">Section</h1>
                 <h2 class="subtitle">
-                    A simple container to divide your page into <strong><?php out($string); ?></strong>, like the one you're currently reading
+                    A simple container to divide your page into <strong><?php out($string); ?></strong>, like the one
+                    you're currently reading
                 </h2>
             </div>
         </div>
@@ -21,7 +24,7 @@ return function ($string) {
                 <div class="columns is-vcentered">
                     <div class="column is-5">
                         <figure class="image is-4by3">
-                            <img src="http://placehold.it/800x600" alt="Description">
+                            <img src="<?php $this->image('placeholder/800x600.png') ?>" alt="Description">
                         </figure>
                     </div>
                     <div class="column is-6 is-offset-1">
