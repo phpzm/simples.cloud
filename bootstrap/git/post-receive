@@ -29,6 +29,6 @@ cd $__APP_ROOT__
 
 /usr/bin/git checkout -f $branch
 /usr/local/bin/composer install
-/usr/bin/php simples.php -uri=/migration
+/usr/bin/php cli.php -uri=/migration
 
 echo "done"
