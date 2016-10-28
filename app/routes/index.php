@@ -11,9 +11,9 @@ return function (Router $router) {
     $menu = [
         '/home' => 'Home',
         '/whoops' => 'Whoops',
-        '/exercicio/*' => 'Exercício',
+        '/api/exercicio/*' => 'Exercício',
         '/api' => 'API',
-        '/site/*' => 'SITE',
+        '/site/' => 'SITE',
         '/path/to/controller' => 'Controller',
     ];
 
@@ -26,17 +26,6 @@ return function (Router $router) {
         ->on('*', '/', $callback)
         ->on('*', '/index', $callback)
         ->on('*', '/home', $callback);
-
-
-    $router->get('/exercicio/*', function ($exercicio) use ($router, $menu) {
-        return $router->response()->view('exercicio/index.php', [
-            'title' => 'Exercício ' . $exercicio, 'menu' => $menu
-        ]);
-    });
-
-    $router->get('/data', function ($data) {
-        return $data;
-    });
 
     $router
         ->nested('get', '/api', 'app/routes/nested/api.php')

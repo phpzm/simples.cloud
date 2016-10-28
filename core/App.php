@@ -40,6 +40,10 @@ class App
 
         //ob_end_clean();
 
+//        echo '<pre>';
+//        var_dump($router->debug);
+//        echo '</pre>';
+
         return $run;
     }
 

@@ -157,8 +157,8 @@ class Router
                 $files = [$files];
             }
 
-            if (!$parameter or func_num_args() === 1) {
-                $parameter = '/';
+            if (!$parameter) {
+                //$parameter = '/';
             }
 
             /** @var Router $router */
@@ -204,7 +204,7 @@ class Router
                 $this->route = (object)['method' => $method, 'uri' => $this->uri, 'route' => $route, 'callback' => $callback];
 
                 $this->debug[] = [
-                    'match' => $this->route
+                    'match' => [$route, $this->uri]
                 ];
 
                 return $this->resolve($callback, array_values($params));
