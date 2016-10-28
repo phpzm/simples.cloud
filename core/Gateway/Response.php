@@ -41,7 +41,7 @@ class Response
      */
     public function view($view, $data = null)
     {
-        $engine = new Engine(path(true, App::config('app')->views));
+        $engine = new Engine(path(true, App::config('app')->views['root']));
 
         $this->body = $engine->render($view, $data);
 

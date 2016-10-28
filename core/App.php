@@ -23,17 +23,22 @@ class App
     private static $RESPONSE = null;
 
     /**
+     * @var array
+     */
+    private static $CONFIGS = [];
+
+    /**
      * @return mixed
      */
     public static function output()
     {
-        ob_start();
+        //ob_start();
 
         $router = new Router(self::request(), self::response());
 
         $run = self::routes($router)->run();
 
-        ob_end_clean();
+        //ob_end_clean();
 
         return $run;
     }
@@ -85,13 +90,19 @@ class App
      */
     public static function config($name)
     {
+        if (isset(self::$CONFIGS[$name])) {
+            return self::$CONFIGS[$name];
+        }
+
         $config = [];
         $filename = path(true, 'app', 'configs', $name . '.php');
         if (file_exists($filename)) {
             /** @noinspection PhpIncludeInspection */
             $config = require $filename;
         }
-        return (object)$config;
+        self::$CONFIGS[$name] = (object)$config;
+
+        return self::$CONFIGS[$name];
     }
 
     /**
@@ -104,10 +115,15 @@ class App
         $files = $files ? $files : self::config('route')->files;
 
         foreach ($files as $file) {
-            /** @noinspection PhpIncludeInspection */
-            $callable = require_once __APP_ROOT__ . '/' . $file;
-            if (is_callable($callable)) {
-                $callable($router);
+
+            $filename = __APP_ROOT__ . '/' . $file;
+            if (file_exists($filename)) {
+
+                /** @noinspection PhpIncludeInspection */
+                $callable = require_once $filename;
+                if (is_callable($callable)) {
+                    $callable($router);
+                }
             }
         }
 

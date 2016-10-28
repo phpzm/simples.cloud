@@ -2,7 +2,7 @@
 
 namespace Simples\Core\Flow;
 
-use Simples\Controller;
+use Simples\Core\App;
 use Simples\Core\Gateway\Request;
 use Simples\Core\Gateway\Response;
 
@@ -33,6 +33,26 @@ class Router
     private $route;
 
     /**
+     * @var array
+     */
+    private $data = [];
+
+    /**
+     * @var string
+     */
+    private $uri;
+
+    /**
+     * @var string
+     */
+    private $method;
+
+    /**
+     * @var array
+     */
+    public $debug = [];
+
+    /**
      * Router constructor.
      * @param Request $request
      * @param Response $response
@@ -41,21 +61,26 @@ class Router
     {
         $this->request = $request;
         $this->response = $response;
+
+        $this->uri = $this->request->getUri();
+        $this->method = $this->request->getMethod();
     }
 
     /**
      * @param $name
      * @param $arguments
+     * @return Router
      */
     public function __call($name, $arguments)
     {
-        $this->on($name, $arguments[0], $arguments[1]);
+        return $this->on($name, $arguments[0], $arguments[1]);
     }
 
     /**
      * @param $method
      * @param $uri
      * @param $callback
+     * @return $this
      */
     public function on($method, $uri, $callback)
     {
@@ -85,11 +110,14 @@ class Router
 
             $this->routes[$method][$route] = $callback;
         }
+
+        return $this;
     }
 
     /**
      * @param $uri
      * @param $class
+     * @return $this
      */
     public function resource($uri, $class)
     {
@@ -109,15 +137,49 @@ class Router
             $item = (object)$item;
             $this->on($item->method, $uri . '/' . $item->uri, $class . '@' . $item->callable);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param $method
+     * @param $start
+     * @param $files
+     * @return $this
+     */
+    public function nested($method, $start, $files)
+    {
+        $router = $this;
+
+        $callback = function($parameter) use ($router, $files) {
+
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+
+            if (!$parameter or func_num_args() === 1) {
+                $parameter = '/';
+            }
+
+            /** @var Router $router */
+            $router->setUri($parameter . '/');
+
+            return App::routes($router->clear(), $files)->run();
+        };
+
+        $this->on($method, $start . '*', $callback);
+
+        return $this;
     }
 
     /**
      * @param $method
      * @param $callback
+     * @return Router
      */
     public function otherWise($method, $callback)
     {
-        $this->on($method, '/(.*)', $callback);
+        return $this->on($method, '/(.*)', $callback);
     }
 
     /**
@@ -125,16 +187,25 @@ class Router
      */
     public function run()
     {
-        $method = $this->request->getMethod();
+        $method = $this->method;
         if (!isset($this->routes[$method])) {
             return null;
         }
 
         foreach ($this->routes[$method] as $route => $callback) {
-            if (preg_match($route, $this->request->getUri(), $params)) {
+
+            $this->debug[] = [
+                'fetch' => [$route, $this->uri]
+            ];
+
+            if (preg_match($route, $this->uri, $params)) {
 
                 array_shift($params);
-                $this->route = (object)['method' => $method, 'uri' => $this->request->getUri(), 'route' => $route, 'callback' => $callback];
+                $this->route = (object)['method' => $method, 'uri' => $this->uri, 'route' => $route, 'callback' => $callback];
+
+                $this->debug[] = [
+                    'match' => $this->route
+                ];
 
                 return $this->resolve($callback, array_values($params));
             }
@@ -148,7 +219,7 @@ class Router
      * @param $params
      * @return mixed
      */
-    private function resolve($callback, $params)
+    private function resolve($callback, array $params)
     {
         if (!is_callable($callback)) {
             $peaces = explode('@', $callback);
@@ -160,12 +231,14 @@ class Router
 
             if (method_exists($class, $method)) {
 
-                /** @var Controller $controller */
+                /** @var \Simples\Core\Flow\Controller $controller */
                 $controller = new $class($this->request(), $this->response(), $this->route);
 
                 $callback = [$controller, $method];
             }
         }
+        $params[] = $this->data;
+
         return call_user_func_array($callback, $params);
     }
 
@@ -192,4 +265,55 @@ class Router
     {
         return $this->route;
     }
+
+    /**
+     * @param $index
+     * @param $value
+     * @return $this
+     */
+    public function in($index, $value)
+    {
+        $this->data[$index] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $index
+     * @param null $default
+     * @return mixed
+     */
+    public function out($index, $default = null)
+    {
+        return isset($this->data[$index]) ? $this->data[$index] : $default;
+    }
+
+    /**
+     * @return $this
+     */
+    private function clear()
+    {
+        $this->routes = [];
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @param string $uri
+     * @return Router
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+        return $this;
+    }
+
 }

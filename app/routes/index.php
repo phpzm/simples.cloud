@@ -12,41 +12,39 @@ return function (Router $router) {
         '/home' => 'Home',
         '/whoops' => 'Whoops',
         '/exercicio/*' => 'Exercício',
+        '/api' => 'API',
+        '/site/*' => 'SITE',
         '/path/to/controller' => 'Controller',
     ];
 
-    $namespace = App::config('route')->namespace;
-
-
-    /**
-     * @doc one callback, a lot of routes
-     */
-    $home = function () use ($router, $menu) {
-        return $router->response()->view('index.phtml', ['title' => 'Hello World!', 'menu' => $menu]);
+    $callback = function ($data) use ($router) {
+        return $router->response()->view('index.phtml', ['title' => 'Hello World!', 'menu' => $data['menu']]);
     };
 
-    $router->on('*', '/', $home);
-    $router->on('*', '/index', $home);
-    $router->on('*', '/home', $home);
+    $router
+        ->in('menu', $menu)
+        ->on('*', '/', $callback)
+        ->on('*', '/index', $callback)
+        ->on('*', '/home', $callback);
 
 
-    /**
-     * @doc use method with verbs of http requests
-     */
     $router->get('/exercicio/*', function ($exercicio) use ($router, $menu) {
-        return $router->response()->view('exercicio/index.php', ['title' => 'Exercício ' . $exercicio, 'menu' => $menu]);
+        return $router->response()->view('exercicio/index.php', [
+            'title' => 'Exercício ' . $exercicio, 'menu' => $menu
+        ]);
     });
 
-    /**
-     * @doc resources creates a block of routes
-     */
-    $router->resource('/path/to/controller', $namespace . '\Controller');
-
-
-    /**
-     * @doc if do not match any routes go to otherWise
-     */
-    $router->otherWise('get', function () {
-        return 'Whoops!' . PHP_EOL;
+    $router->get('/data', function ($data) {
+        return $data;
     });
+
+    $router
+        ->nested('get', '/api', 'app/routes/nested/api.php')
+        ->nested('get', '/site', 'app/routes/nested/site.php');
+
+    $router
+        ->resource('/path/to/controller', App::config('route')->namespace . '\Controller')
+        ->otherWise('get', function () {
+            return 'Whoops!' . PHP_EOL;
+        });
 };

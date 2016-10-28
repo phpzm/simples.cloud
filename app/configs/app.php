@@ -2,5 +2,8 @@
 
 return [
     'assets' => 'public/assets',
-    'views' => 'app/resources/view'
+    'views' => [
+        'root' => 'app/resources/view',
+        'controller' => 'app/resources/view/controller',
+    ],
 ];

@@ -2,6 +2,7 @@
 
 namespace Simples\Core\Flow;
 
+use Simples\Core\App;
 use Simples\Core\Gateway\Request;
 use Simples\Core\Gateway\Response;
 
@@ -42,104 +43,115 @@ class Controller
         $this->response = $response;
 
         $this->route = $route;
-        $this->view = isset($route->uri) ? $route->uri : '';
+        $this->view = isset($route->uri) ? $route->uri : App::config('app')->views['controller'];
     }
 
     /**
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function index()
+    public function index(array $data)
     {
         $view = $this->view('/index');
-        return $this->response()->view($view . '/index.php', [
-            'title' => 'Simples\Core\Flow\Controller@index',
-            'view' => $view
-        ]);
+
+        $data['assign'] = static::class . '@index';
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/index.php', $data);
     }
 
     /**
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function create()
+    public function create($data)
     {
         $view = $this->view('/create');
-        return $this->response()->view($view . '/form.php', [
-            'title' => 'Simples\Core\Flow\Controller@create',
-            'view' => $view
-        ]);
+
+        $data['assign'] = static::class . '@create';
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/form.php', $data);
     }
 
     /**
      * @param $id
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function show($id)
+    public function show($id, array $data)
     {
         $view = $this->view('/' . $id);
-        return $this->response()->view($view . '/form.php', [
-            'title' => 'Simples\Core\Flow\Controller@show',
-            'id' => $id,
-            'view' => $view
-        ]);
+
+        $data['assign'] = static::class . '@show';
+        $data['id'] = $id;
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/form.php', $data);
     }
 
     /**
      * @param $id
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function edit($id)
+    public function edit($id, array $data)
     {
         $view = $this->view('/' . $id . '/edit');
-        return $this->response()->view($view . '/form.php', [
-            'title' => 'Simples\Core\Flow\Controller@edit',
-            'id' => $id,
-            'view' => $view
-        ]);
+
+        $data['assign'] = static::class . '@edit';
+        $data['id'] = $id;
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/form.php', $data);
     }
 
     /**
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function store()
+    public function store(array $data)
     {
         $view = $this->view('');
-        return $this->response()->view($view . '/form.php', [
-                'title' => 'Simples\Core\Flow\Controller@store',
-                'input' => $this->request->all(),
-                'view' => $view
-            ]
-        );
+
+        $data['assign'] = static::class . '@store';
+        $data['input'] = $this->request->all();
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/form.php', $data);
     }
 
     /**
      * @param $id
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function update($id)
+    public function update($id, array $data)
     {
         $view = $this->view('/' . $id);
-        return $this->response()->view($view . '/form.php', [
-                'title' => 'Simples\Core\Flow\Controller@update',
-                'id' => $id,
-                'input' => $this->request->all(),
-                'view' => $view
-            ]
-        );
+
+        $data['assign'] = static::class . '@update';
+        $data['id'] = $id;
+        $data['input'] = $this->request->all();
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/form.php',$data);
     }
 
     /**
      * @param $id
-     * @return string
+     * @param array $data
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy($id, array $data)
     {
         $view = $this->view('/' . $id);
-        return $this->response()->view($view . '/form.php', [
-                'title' => 'Simples\Core\Flow\Controller@destroy',
-                'id' => $id,
-                'view' => $view
-            ]
-        );
+
+        $data['assign'] = static::class . '@destroy';
+        $data['id'] = $id;
+        $data['view'] = $view;
+
+        return $this->response()->view($view . '/form.php', $data);
     }
 
     /**
