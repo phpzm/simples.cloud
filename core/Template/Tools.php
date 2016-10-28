@@ -32,6 +32,32 @@ class Tools
     }
 
     /**
+     * @param bool $print
+     * @return string
+     */
+    public function here($print = true)
+    {
+        return App::route($this->uri(), $print);
+    }
+
+    /**
+     * @return string
+     */
+    public function uri()
+    {
+        return substr(App::request()->getUri(), 0, -1);
+    }
+
+    /**
+     * @param $href
+     * @return bool
+     */
+    public function match($href)
+    {
+        return strpos(App::request()->getUri(), $href) === 0;
+    }
+
+    /**
      * @param $string
      * @param bool $print
      * @return string
@@ -66,17 +92,9 @@ class Tools
      * @param bool $print
      * @return string
      */
-    protected function asset($path, $print = true)
+    public function asset($path, $print = true)
     {
         return $this->href('assets/' . $path, $print);
     }
 
-    /**
-     * @param $href
-     * @return bool
-     */
-    public function isActive($href)
-    {
-        return strpos(App::request()->getUri(), $href) === 0;
-    }
 }

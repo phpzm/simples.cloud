@@ -32,13 +32,13 @@ class App
      */
     public static function output()
     {
-        ob_start();
+        //ob_start();
 
         $router = new Router(self::request(), self::response());
 
         $run = self::routes($router)->run();
 
-        ob_end_clean();
+        //ob_end_clean();
 
         return $run;
     }

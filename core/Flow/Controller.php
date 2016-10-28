@@ -54,10 +54,10 @@ class Controller
     {
         $view = $this->view('/index');
 
-        $data['assign'] = static::class . '@index';
+        $data['assign'] = '@index';
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/index.php', $data);
+        return $this->response()->view($view . '/view.php', $data);
     }
 
     /**
@@ -68,10 +68,10 @@ class Controller
     {
         $view = $this->view('/create');
 
-        $data['assign'] = static::class . '@create';
+        $data['assign'] = '@create';
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/form.php', $data);
+        return $this->response()->view($view . '/view.php', $data);
     }
 
     /**
@@ -82,12 +82,12 @@ class Controller
     public function show($id, array $data)
     {
         $view = $this->view('/' . $id);
-
-        $data['assign'] = static::class . '@show';
+        
+        $data['assign'] = '@show';
         $data['id'] = $id;
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/form.php', $data);
+        return $this->response()->view($view . '/view.php', $data);
     }
 
     /**
@@ -99,11 +99,11 @@ class Controller
     {
         $view = $this->view('/' . $id . '/edit');
 
-        $data['assign'] = static::class . '@edit';
+        $data['assign'] = '@edit';
         $data['id'] = $id;
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/form.php', $data);
+        return $this->response()->view($view . '/view.php', $data);
     }
 
     /**
@@ -114,11 +114,11 @@ class Controller
     {
         $view = $this->view('');
 
-        $data['assign'] = static::class . '@store';
+        $data['assign'] = '@store';
         $data['input'] = $this->request->all();
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/form.php', $data);
+        return $this->response()->view($view . '/view.php', $data);
     }
 
     /**
@@ -130,12 +130,12 @@ class Controller
     {
         $view = $this->view('/' . $id);
 
-        $data['assign'] = static::class . '@update';
+        $data['assign'] = '@update';
         $data['id'] = $id;
         $data['input'] = $this->request->all();
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/form.php',$data);
+        return $this->response()->view($view . '/view.php',$data);
     }
 
     /**
@@ -147,11 +147,11 @@ class Controller
     {
         $view = $this->view('/' . $id);
 
-        $data['assign'] = static::class . '@destroy';
+        $data['assign'] = '@destroy';
         $data['id'] = $id;
         $data['view'] = $view;
 
-        return $this->response()->view($view . '/form.php', $data);
+        return $this->response()->view($view . '/view.php', $data);
     }
 
     /**

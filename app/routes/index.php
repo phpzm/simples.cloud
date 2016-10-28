@@ -15,10 +15,10 @@ return function (Router $router) {
     $menu = [
         '/home' => 'Home',
         '/whoops' => 'Whoops',
-        '/api/exercicio/*' => 'Exercício',
         '/api' => 'API',
         '/site/' => 'SITE',
-        '/path/to/controller' => 'Controller',
+        '/api/exercicio/*' => 'Exercício',
+        '/app/context/controller' => 'Controller',
     ];
 
     $callback = function ($data) use ($router) {
@@ -32,11 +32,11 @@ return function (Router $router) {
         ->on('get', '/home', $callback);
 
     $router
-        ->nested('get', '/api', 'app/routes/nested/api.php')
-        ->nested('get', '/site', 'app/routes/nested/site.php');
+        ->group('*', '/api', 'app/routes/nested/api.php')
+        ->group('get', '/site', 'app/routes/nested/site.php');
 
     $router
-        ->resource('/path/to/controller', App::config('route')->namespace . '\Controller')
+        ->resource('/app/context/controller', App::config('route')->namespace . '\Controller')
         ->otherWise('get', function () {
             return 'Whoops!' . PHP_EOL;
         });

@@ -6,8 +6,8 @@
 <nav class="nav has-shadow" id="top">
     <div class="container">
         <div class="nav-left">
-            <a class="nav-item is-brand" href="<?php $this->href('/home'); ?>">
-                <img src="<?php $this->image('logo.png') ?>" alt="logo"/>
+            <a href="<?php $this->href('/home'); ?>">
+                <img src="<?php $this->image('logo.png') ?>" style="height: 60px; padding: 5px;"  alt="logo"/>
             </a>
         </div>
       <span class="nav-toggle">
@@ -19,9 +19,13 @@
             <?php
             if (is_array($this->get('menu', false))) {
 
-                $selected = '';
+                $active = false;
                 foreach ($this->get('menu', false) as $href => $text) {
-                    $selected = !$selected && $this->isActive($href) ? 'is-active' : '';
+                    $selected = '';
+                    if (!$active && $this->match($href)) {
+                        $selected = 'is-active';
+                        $active = true;
+                    }
                     ?>
                         <a class="nav-item is-tab <?php out($selected); ?>" href="<?php $this->href($href); ?>">
                             <?php out($text); ?>

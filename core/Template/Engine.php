@@ -35,7 +35,6 @@ class Engine extends Tools
     public function __construct($root)
     {
         $this->root = $root;
-        $this->layout = (object)['template' => '', 'data' => '', 'section' => '', 'done' => false];
     }
 
     /**
@@ -44,6 +43,29 @@ class Engine extends Tools
      * @return string
      */
     public function render($template, $data)
+    {
+        $content = $this->compile($template, $data);
+
+        while ($this->layout) {
+
+            $layout = $this->layout;
+
+            $this->sections[$layout->section] = $content;
+
+            $this->layout = null;
+
+            $content = $this->compile($layout->template, array_merge($layout->data, $this->data));
+        }
+
+        return $content;
+    }
+
+    /**
+     * @param $template
+     * @param $data
+     * @return string
+     */
+    private function compile($template, $data)
     {
         $filename = path($this->root, $template);
 
@@ -61,29 +83,9 @@ class Engine extends Tools
                 call_user_func_array($callable, is_array($data) ? array_values($data) : [$data]);
             }
         }
-        $content = $this->applyLayout(ob_get_contents());
+        $content = ob_get_contents();
 
         ob_end_clean();
-
-        return $content;
-    }
-
-    /**
-     * @param $content
-     * @return string
-     */
-    private function applyLayout($content)
-    {
-        if (($this->layout->template) and ($this->layout->done === false)) {
-
-            $this->layout->done = true;
-
-            $this->sections[$this->layout->section] = $content;
-
-            $content = $this->render($this->layout->template, array_merge($this->layout->data, $this->data));
-
-            $this->sections[$this->layout->section] = null;
-        }
 
         return $content;
     }
@@ -93,11 +95,11 @@ class Engine extends Tools
      * @param $section
      * @param array $data
      */
-    protected function layout($layout, $section, array $data = [])
+    protected function extend($layout, $section, array $data = [])
     {
-        $this->layout->template = $layout;
-        $this->layout->section = $section;
-        $this->layout->data = $data;
+        $layout = (object)['section' => $section, 'template' => $layout, 'data' => $data];
+
+        $this->layout =  $layout;
     }
 
     /**
@@ -132,7 +134,7 @@ class Engine extends Tools
      * @param $template
      * @return mixed
      */
-    protected function import($template)
+    protected function append($template)
     {
         $filename = path($this->root, $template);
 

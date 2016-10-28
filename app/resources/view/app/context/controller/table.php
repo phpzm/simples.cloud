@@ -28,7 +28,7 @@
         </td>
         <td>index</td>
         <td>
-            <a href="<?php $this->href('/path/to/controller/index'); ?>" class="button">route.index</a>
+            <a href="<?php $this->href('/app/context/controller/index'); ?>" class="button">route.index</a>
         </td>
     </tr>
     <tr>
@@ -40,7 +40,7 @@
         </td>
         <td>create</td>
         <td>
-            <a href="<?php $this->href('/path/to/controller/create/'); ?>" class="button">route.create</a>
+            <a href="<?php $this->href('/app/context/controller/create/'); ?>" class="button">route.create</a>
         </td>
     </tr>
     <tr>
@@ -54,7 +54,7 @@
         </td>
         <td>show</td>
         <td>
-            <a href="<?php $this->href('/path/to/controller/id/'); ?>" class="button">route.show</a>
+            <a href="<?php $this->href('/app/context/controller/id/'); ?>" class="button">route.show</a>
         </td>
     </tr>
     <tr>
@@ -68,7 +68,7 @@
         </td>
         <td>edit</td>
         <td>
-            <a href="<?php $this->href('/path/to/controller/id/edit/'); ?>" class="button">route.edit</a>
+            <a href="<?php $this->href('/app/context/controller/id/edit/'); ?>" class="button">route.edit</a>
         </td>
     </tr>
 
@@ -79,7 +79,7 @@
         </td>
         <td>store</td>
         <td>
-            <form action="<?php $this->href('/path/to/controller/'); ?>" method="post">
+            <form action="<?php $this->href('/app/context/controller/'); ?>" method="post">
                 <input type="hidden" name="_method" value="POST"/>
                 <input type="submit" value="route.store" class="button"/>
             </form>
@@ -96,7 +96,7 @@
         </td>
         <td>update</td>
         <td>
-            <form action="<?php $this->href('/path/to/controller/id/'); ?>" method="post">
+            <form action="<?php $this->href('/app/context/controller/id/'); ?>" method="post">
                 <input type="hidden" name="_method" value="PUT"/>
                 <input type="submit" value="route.update" class="button"/>
             </form>
@@ -113,7 +113,7 @@
         </td>
         <td>destroy</td>
         <td>
-            <form action="<?php $this->href('/path/to/controller/id/'); ?>" method="post">
+            <form action="<?php $this->href('/app/context/controller/id/'); ?>" method="post">
                 <input type="hidden" name="_method" value="DELETE"/>
                 <input type="submit" value="route.destroy" class="button"/>
             </form>
