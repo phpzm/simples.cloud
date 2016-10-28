@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Variables
-USER_PATH='/home/dev/www/simples.cloud'
-REPO_PATH=$USER_PATH"/repo.git"
-PATH_APP=$USER_PATH"/staging"
-PRODUCTION_PATH=$USER_PATH"/production"
+__APP_HOME__='/home/dev/www/simples.cloud'
+
+__APP_REPO__=$__APP_HOME__"/repo.git"
+
+__APP_ROOT__=$__APP_HOME__"/staging"
 
 if ! [ -t 0 ]; then
   read -a ref
@@ -15,17 +15,17 @@ branch="${REF[2]}"
 
 if [ "master" == "$branch" ]; then
   echo 'master was pushed'
-  PATH_APP=$PRODUCTION_PATH
+  __APP_ROOT__=$__APP_HOME__"/production"
 fi
 
 if [ "develop" == "$branch" ]; then
   echo 'develop was pushed'
 fi
 
-export GIT_DIR=$REPO_PATH
-export GIT_WORK_TREE=$PATH
+export GIT_DIR=$__APP_REPO__
+export GIT_WORK_TREE=$__APP_ROOT__
 
-cd $PATH_APP
+cd $__APP_ROOT__
 
 /usr/bin/git checkout -f $branch
 /usr/local/bin/composer install

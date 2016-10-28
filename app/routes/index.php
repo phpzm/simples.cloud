@@ -9,7 +9,7 @@ use Simples\Core\Flow\Router;
 return function (Router $router) {
 
     $router->on('cli', '/migration', function() {
-        return 'cli';
+        return 'migration';
     });
 
     $menu = [
