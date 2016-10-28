@@ -178,7 +178,20 @@ class App
         if (method_exists($output, 'getBody')) {
             $output = $output->getBody();
         }
+        out(
+            '|--------------------------------------------------------------------------|' . PHP_EOL .
+            '| Simples CLI Interface                                                    |' . PHP_EOL .
+            '|--------------------------------------------------------------------------|' . PHP_EOL .
+            '| -uri=/migration                                                          |' . PHP_EOL .
+            '| -uri=/clear                                                              |'
+        );
+        echo PHP_EOL;
+        out('|--------------------------------------------------------------------------|' . PHP_EOL);
+        echo PHP_EOL;
         out($output);
+        echo PHP_EOL;
+        out('---------------------------------------------------------------------------|' . PHP_EOL);
+        echo PHP_EOL;
     }
 
 }
