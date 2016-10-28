@@ -111,7 +111,7 @@ class Request
 
 
         $this->uri = substr($this->uri, -1) !== '/' ? $this->uri . '/' : $this->uri ;
-        $this->method = strtoupper($this->method);
+        $this->method = strtoupper('cli');
 
         $this->set('CLI', $cli);
     }

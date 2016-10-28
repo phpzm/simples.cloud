@@ -8,6 +8,10 @@ use Simples\Core\Flow\Router;
  */
 return function (Router $router) {
 
+    $router->on('cli', '/migration', function() {
+        return 'cli';
+    });
+
     $menu = [
         '/home' => 'Home',
         '/whoops' => 'Whoops',
@@ -23,9 +27,9 @@ return function (Router $router) {
 
     $router
         ->in('menu', $menu)
-        ->on('*', '/', $callback)
-        ->on('*', '/index', $callback)
-        ->on('*', '/home', $callback);
+        ->on('get', '/', $callback)
+        ->on('get', '/index', $callback)
+        ->on('get', '/home', $callback);
 
     $router
         ->nested('get', '/api', 'app/routes/nested/api.php')

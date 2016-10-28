@@ -32,17 +32,13 @@ class App
      */
     public static function output()
     {
-        //ob_start();
+        ob_start();
 
         $router = new Router(self::request(), self::response());
 
         $run = self::routes($router)->run();
 
-        //ob_end_clean();
-
-//        echo '<pre>';
-//        var_dump($router->debug);
-//        echo '</pre>';
+        ob_end_clean();
 
         return $run;
     }
@@ -166,7 +162,18 @@ class App
     /**
      * @param $output
      */
-    public static function body($output)
+    public static function http($output)
+    {
+        if (method_exists($output, 'getBody')) {
+            $output = $output->getBody();
+        }
+        out($output);
+    }
+
+    /**
+     * @param $output
+     */
+    public static function cli($output)
     {
         if (method_exists($output, 'getBody')) {
             $output = $output->getBody();

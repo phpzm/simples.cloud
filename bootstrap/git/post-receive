@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Variables
+USER_PATH='/home/dev/www/simples.cloud'
+REPO_PATH=$USER_PATH"/repo.git"
+PATH_APP=$USER_PATH"/staging"
+PRODUCTION_PATH=$USER_PATH"/production"
+
+if ! [ -t 0 ]; then
+  read -a ref
+fi
+
+IFS='/' read -ra REF <<< "${ref[2]}"
+branch="${REF[2]}"
+
+if [ "master" == "$branch" ]; then
+  echo 'master was pushed'
+  PATH_APP=$PRODUCTION_PATH
+fi
+
+if [ "develop" == "$branch" ]; then
+  echo 'develop was pushed'
+fi
+
+export GIT_DIR=$REPO_PATH
+export GIT_WORK_TREE=$PATH
+
+cd $PATH_APP
+
+/usr/bin/git checkout -f $branch
+/usr/local/bin/composer install
+/usr/bin/php simples.php -uri=/migration
+
+echo "done"
