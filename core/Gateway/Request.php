@@ -99,14 +99,14 @@ class Request
             }
         }
 
-        if (isset($cli['_uri'])) {
-            $this->uri = $cli['_uri'];
+        if (isset($cli['-uri'])) {
+            $this->uri = $cli['-uri'];
         }
-        if (isset($cli['_method'])) {
-            $this->method = $cli['_method'];
+        if (isset($cli['-method'])) {
+            $this->method = $cli['-method'];
         }
-        if (isset($cli['_url'])) {
-            $this->url = $cli['_url'];
+        if (isset($cli['-url'])) {
+            $this->url = $cli['-url'];
         }
 
 
