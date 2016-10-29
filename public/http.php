@@ -6,7 +6,7 @@ require_once __APP_ROOT__ . '/vendor/autoload.php';
 
 use Simples\Core\App;
 
-$output = App::output();
+$output = App::output(__APP_ROOT__);
 
 App::headers($output);
 

@@ -15,9 +15,9 @@ return function (Router $router) {
     $menu = [
         '/home' => 'Home',
         '/whoops' => 'Whoops',
-        '/api' => 'API',
-        '/site/' => 'SITE',
-        '/api/exercicio/*' => 'Exercício',
+        '/www/api' => 'API',
+        '/www/site/' => 'SITE',
+        '/www/exercicio/*' => 'Exercício',
         '/app/context/controller' => 'Controller',
     ];
 
@@ -32,8 +32,7 @@ return function (Router $router) {
         ->on('get', '/home', $callback);
 
     $router
-        ->group('*', '/api', 'app/routes/nested/api.php')
-        ->group('get', '/site', 'app/routes/nested/site.php');
+        ->group('*', '/www', 'app/routes/groups/www');
 
     $router
         ->resource('/app/context/controller', App::config('route')->namespace . '\Controller')
