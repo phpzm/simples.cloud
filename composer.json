@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "phpzm/core": "^0.0.3"
+        "phpzm/core": "^0.0.4"
     },
     "autoload": {
         "psr-4": {

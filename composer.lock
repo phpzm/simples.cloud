@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6e1f4ce1e29fb8ef195862449a40c46f",
-    "content-hash": "1baf6616bcd5c8646a661ea22712c300",
+    "hash": "0e133bccc2e8012d5c082473d49f43a1",
+    "content-hash": "758117d29ee13b949ec1e0052ec37bf1",
     "packages": [
         {
             "name": "phpzm/core",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpzm/core.git",
-                "reference": "7ecb689cf2a95ed2af70d8ccc367918f49af50d1"
+                "reference": "dbbea803b1b4e39ce5d8610d613ca336c1823b82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpzm/core/zipball/7ecb689cf2a95ed2af70d8ccc367918f49af50d1",
-                "reference": "7ecb689cf2a95ed2af70d8ccc367918f49af50d1",
+                "url": "https://api.github.com/repos/phpzm/core/zipball/dbbea803b1b4e39ce5d8610d613ca336c1823b82",
+                "reference": "dbbea803b1b4e39ce5d8610d613ca336c1823b82",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 "php",
                 "resource"
             ],
-            "time": "2016-10-29 13:34:07"
+            "time": "2016-10-29 14:29:54"
         }
     ],
     "packages-dev": [],
