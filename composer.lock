@@ -1,0 +1,68 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "6e1f4ce1e29fb8ef195862449a40c46f",
+    "content-hash": "1baf6616bcd5c8646a661ea22712c300",
+    "packages": [
+        {
+            "name": "phpzm/core",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpzm/core.git",
+                "reference": "7ecb689cf2a95ed2af70d8ccc367918f49af50d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpzm/core/zipball/7ecb689cf2a95ed2af70d8ccc367918f49af50d1",
+                "reference": "7ecb689cf2a95ed2af70d8ccc367918f49af50d1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Simples\\Core\\": "src/"
+                },
+                "files": [
+                    "bootstrap/index.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William",
+                    "email": "wilcorrea@gmail.com",
+                    "homepage": "https://simples.cloud",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simples Core package",
+            "homepage": "https://github.com/phpzm/core",
+            "keywords": [
+                "api",
+                "gennesis.io",
+                "micro service",
+                "php",
+                "resource"
+            ],
+            "time": "2016-10-29 13:34:07"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-__APP_HOME__='/home/dev/www/simples.cloud'
+__APP_HOME__='/var/html/www'
 
 __APP_REPO__=$__APP_HOME__"/repo.git"
 

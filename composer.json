@@ -1,5 +1,5 @@
 {
-    "name": "phpzm/trabalho-final",
+    "name": "phpzm/simples.cloud",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -8,14 +8,12 @@
             "email": "wilcorrea@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "phpzm/core": "^0.0.3"
+    },
     "autoload": {
         "psr-4": {
-            "Fagoc\\": "app/domains/",
-            "Simples\\Core\\": "core"
-        },
-        "files": [
-            "bootstrap/index.php"
-        ]
+            "Fagoc\\": "app/domains/"
+        }
     }
 }
