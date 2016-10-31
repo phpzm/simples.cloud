@@ -9,7 +9,7 @@ E sair usando feliz da vida recursos básicos para um desenvolver um site ou sis
 
 # Rotas
 ## Criando rotas
-----
+
 Rotas simples
 ```php
 return function($router) {
