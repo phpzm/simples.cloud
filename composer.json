@@ -1,6 +1,8 @@
 {
     "name": "phpzm/simples.cloud",
     "type": "project",
+    "minimum-stability": "dev",
+    "version": "0.0.1",
     "license": "MIT",
     "authors": [
         {
