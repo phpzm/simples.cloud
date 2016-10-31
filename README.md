@@ -44,8 +44,11 @@ Grupos de Rotas
 ```php
 return function($router) {
 
-    $router->group('GET', '/site', ['more/files/routes.php', 'more/files/site.php']); //list of route files
-    $router->group('*', '/api', 'api/routes');// dir with route files
+    // lista com arquivos de rota
+    $router->group('GET', '/site', ['more/files/routes.php', 'more/files/site.php']);
+
+    // pasta que contém arquivos de rotas
+    $router->group('*', '/api', 'api/routes');
 }
 ```
 
