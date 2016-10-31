@@ -16,9 +16,9 @@ E sair usando feliz da vida recursos básicos para um desenvolver um site ou sis
 # Rotas
 ## Criando rotas
 
-Os arquivos de rotas podem ser feitos diretamente direto no corpo do arquivo (onde uma variável $router irá surgir por questões de escopo) ou retornando closures que recebem o $router como parâmetro.
-
 A configuração de qual a primeira rota (ou quais as primeiras rotas) será chamada fica por padrão dentro de app/configs/route.php.
+
+As configurações de acesso aos recursos da aplicação podem ser feitas nos arquivos de rotas. Os comandos podem ser escritos diretamente direto no corpo do arquivo (onde uma variável $router estará disponível por questões de escopo) ou usando o retorno de closures que recebem o $router como parâmetro.
 
 Rotas simples
 ```php
