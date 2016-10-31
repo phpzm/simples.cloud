@@ -5,6 +5,12 @@ Imagine ter uma estrutura de projeto simples e intuitiva com apenas um comando..
 ```
 composer create-project phpzm/simples.cloud
 ```
+ou
+```
+git clone https://github.com/phpzm/simples.cloud.git {dir}
+cd {dir}
+composer install
+```
 E sair usando feliz da vida recursos básicos para um desenvolver um site ou sistema em PHP
 
 # Rotas
