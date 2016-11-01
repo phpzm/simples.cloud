@@ -21,8 +21,9 @@ return function (Router $router) {
         '/app/context/controller' => 'Controller',
     ];
 
-    $callback = function ($data) use ($router) {
-        return $router->response()->view('index.phtml', ['title' => 'Hello World!', 'menu' => $data['menu']]);
+    $callback = function ($data) {
+        /** @var Router $this */
+        return $this->response()->view('index.phtml', ['title' => 'Hello World!', 'menu' => $data['menu']]);
     };
 
     $router
@@ -35,7 +36,7 @@ return function (Router $router) {
         ->group('*', '/www', 'app/routes/groups/www');
 
     $router
-        ->resource('/app/context/controller', App::config('route')->namespace . '\Controller')
+        ->resource('/app/context/controller', App::config('app')->namespace . '\Controller')
         ->otherWise('get', function () {
             return 'Whoops!' . PHP_EOL;
         });

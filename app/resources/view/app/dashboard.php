@@ -4,4 +4,4 @@
 
 $this->extend('layout/index.phtml', 'index');
 
-$this->section('dashboard');
+$this->grant('dashboard');
