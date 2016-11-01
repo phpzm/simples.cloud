@@ -21,9 +21,9 @@ return function (Router $router) {
         '/app/context/controller' => 'Controller',
     ];
 
-    $callback = function ($data) {
+    $callback = function () {
         /** @var Router $this */
-        return $this->response()->view('index.phtml', ['title' => 'Hello World!', 'menu' => $data['menu']]);
+        return $this->response()->view('index.phtml', ['title' => 'Hello World!', 'menu' => $this->out('menu')]);
     };
 
     $router

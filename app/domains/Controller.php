@@ -11,13 +11,26 @@ use Simples\Core\Flow\Controller as FlowController;
 class Controller extends FlowController
 {
     /**
-     * @SWG\Info(title="My First API", version="0.1")
-     */
-
-    /**
-     * @SWG\Get(
-     *     path="/api/resource.json",
-     *     @SWG\Response(response="200", description="An example resource")
+     * @SWG\Post(path="/user",
+     *   tags={"user"},
+     *   summary="Create user",
+     *   description="This can only be done by the logged in user.",
+     *   operationId="createUser",
+     *   produces={"application/xml", "application/json"},
+     *   @SWG\Parameter(
+     *     in="body",
+     *     name="body",
+     *     description="Created user object",
+     *     required=false,
+     *     @SWG\Schema(ref="#/definitions/User")
+     *   ),
+     *   @SWG\Response(response="default", description="successful operation")
      * )
+     * @param array $data
+     * @return \Simples\Core\Gateway\Response
      */
+    public function index(array $data)
+    {
+        return parent::index($data);
+    }
 }
