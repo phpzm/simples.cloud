@@ -4,27 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0e133bccc2e8012d5c082473d49f43a1",
-    "content-hash": "758117d29ee13b949ec1e0052ec37bf1",
+    "hash": "0946851370b2c1ca24bc06d53ee118bf",
+    "content-hash": "7459ceaaf1c3ce96a2d778b5148c9c93",
     "packages": [
         {
             "name": "phpzm/core",
-            "version": "0.0.4",
+            "version": "0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpzm/core.git",
-                "reference": "dbbea803b1b4e39ce5d8610d613ca336c1823b82"
+                "reference": "d87089e99c9d996054adb602143aca73e10be5e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpzm/core/zipball/dbbea803b1b4e39ce5d8610d613ca336c1823b82",
-                "reference": "dbbea803b1b4e39ce5d8610d613ca336c1823b82",
+                "url": "https://api.github.com/repos/phpzm/core/zipball/d87089e99c9d996054adb602143aca73e10be5e0",
+                "reference": "d87089e99c9d996054adb602143aca73e10be5e0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.0"
             },
-            "type": "library",
+            "type": "package",
             "autoload": {
                 "psr-4": {
                     "Simples\\Core\\": "src/"
@@ -54,12 +54,12 @@
                 "php",
                 "resource"
             ],
-            "time": "2016-10-29 14:29:54"
+            "time": "2016-11-01 02:26:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,

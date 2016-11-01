@@ -1,3 +1,9 @@
 .idea
 nbproject
 vendor/
+dev/
+.env
+config/*
+!config/app.php
+!config/route.php
+!config/@.php.sample
