@@ -2,7 +2,7 @@
     "name": "phpzm/simples.cloud",
     "type": "project",
     "minimum-stability": "dev",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "license": "MIT",
     "authors": [
         {
@@ -17,5 +17,10 @@
         "psr-4": {
             "Fagoc\\": "app/domains/"
         }
+    },
+    "scripts": {
+        "docs": "swagger app -o public/docs.json -b app/scripts/docs/swagger.php",
+        "migration": "php cli.php -uri=/migration",
+        "start": "php -S localhost:8000 -t public/"
     }
 }

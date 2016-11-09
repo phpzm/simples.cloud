@@ -12,6 +12,10 @@ return function (Router $router) {
         ->get('/data', function ($data) {
 
             return $data;
+        })
+        ->get('/william', function ($data) {
+
+            return 'William';
         });
 
 };
