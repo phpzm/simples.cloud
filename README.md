@@ -1,5 +1,4 @@
 # Simples
-Projeto final de exemplo do curso básico de PHP
 ----
 Imagine ter uma estrutura de projeto simples e intuitiva com apenas um comando.. Com Simples isso é possível. Se você tem um projeto pequeno, com poucas necessidades e poucos recursos pode simplesmente usar:
 ```
