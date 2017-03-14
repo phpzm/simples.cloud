@@ -3,25 +3,25 @@ version: '2'
 
 services:
 
-  mysql-simples:
+  mysql-simples.cloud:
     image: ambientum/mysql:5.7
-    container_name: mysql-simples
+    container_name: mysql-simples.cloud
     volumes:
       - ./.docker/mysql:/var/lib/mysql
     ports:
       - "4000:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=simples
-      - MYSQL_DATABASE=simples
-      - MYSQL_USER=simples
-      - MYSQL_PASSWORD=simples
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
 
-  apache-simples:
+  apache-simples.cloud:
     image: ambientum/php:7.0-apache
-    container_name: apache-simples
+    container_name: apache-simples.cloud
     volumes:
       - .:/var/www/app
     ports:
       - "4010:8080"
     links:
-      - mysql-simples
+      - mysql-simples.cloud
