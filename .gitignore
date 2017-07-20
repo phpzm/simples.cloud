@@ -1,14 +1,16 @@
 # directories
+/.git
 /.idea
 /nbproject
+/.docker
 /.dev
 /.docs
 /storage/*
 /vendor
 
 # files
-/composer.lock
-.env
+/.env
+/docker-compose.yml
 *.cache
 *.log
 
